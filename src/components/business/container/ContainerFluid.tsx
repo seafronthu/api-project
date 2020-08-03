@@ -7,17 +7,23 @@ interface PropTypes {
   header?: React.ReactNode;
   children: React.ReactNode;
   spinning?: boolean;
-  theme?: "black";
+  theme?: "black" | "white";
   tip?: string;
+  padding?: boolean;
   className?: string;
   scrollClassName?: string | string[];
 }
 function ContainerFluid(props: PropTypes) {
-  const { children, spinning, theme, header, tip, scrollClassName, className } = props;
+  const { children, spinning, theme, padding, header, tip, scrollClassName, className } = props;
   const loading = typeof spinning === "boolean" ? spinning : false;
   const containerCls = useMemo(() => {
-    return mergePrefixCls(null, theme, "container-fluid width-full height-full", className);
-  }, [className, theme]);
+    return mergePrefixCls(
+      "container-fluid-",
+      [theme, typeof padding === "boolean" ? "padding" : null],
+      "container-fluid width-full height-full",
+      className
+    );
+  }, [className, theme, padding]);
   const scrollCls = useMemo(() => {
     return classnames(["container-fluid-scroll", scrollClassName]);
   }, [scrollClassName]);

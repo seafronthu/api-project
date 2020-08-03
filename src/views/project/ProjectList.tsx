@@ -5,7 +5,7 @@ import ProjectCard from "./components/ProjectCard";
 import ContainerFluid from "src/components/business/container/ContainerFluid";
 import "./ProjectList.less";
 const { Search } = Input;
-function ProjectList() {
+function ProjectList(props: {}) {
   const renderHeader = () => {
     return (
       <div className="project-list-header flex flex-row-between-center flex-wrap">
