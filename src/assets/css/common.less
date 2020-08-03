@@ -1,0 +1,188 @@
+body {
+
+  /***** flex 布局 ****/
+  // .flex-row-start 用法
+  @direction: row,
+  column;
+
+  .justify-content() {
+    start: flex-start;
+    end: flex-end;
+    center: center;
+    between: space-between;
+    around: space-around;
+  }
+
+  .align-items() {
+    start: flex-start;
+    end: flex-end;
+    center: center;
+    stretch: stretch;
+  }
+
+  .displayFlex (@flex-direction, @justify-content-key, @align-items-key, @justify-content, @align-items) when (@justify-content-key =@align-items-key) {
+    .flex-@{flex-direction}-@{justify-content-key} {
+      flex-direction: @flex-direction;
+      justify-content: @justify-content;
+      align-items: @align-items;
+    }
+  }
+
+  .displayFlex (@flex-direction, @justify-content-key, @align-items-key, @justify-content, @align-items) when not(@justify-content-key =@align-items-key) {
+    .flex-@{flex-direction}-@{justify-content-key}-@{align-items-key} {
+      flex-direction: @flex-direction;
+      justify-content: @justify-content;
+      align-items: @align-items;
+    }
+  }
+
+  each(@direction, .(@flex-direction) {
+      each(.justify-content(), .(@justify-content, @justify-content-key) {
+          each(.align-items(), .(@align-items, @align-items-key) {
+              .displayFlex(@flex-direction, @justify-content-key, @align-items-key, @justify-content, @align-items)
+            }
+
+          )
+        }
+
+      )
+    }
+
+  )
+
+  /** layout **/
+  .flex {
+    display: flex;
+  }
+
+  .inline-flex {
+    display: inline-flex;
+  }
+
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
+
+  /** 文本设置 **/
+  .text-left {
+    text-align: left;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .text-justify {
+    text-align: justify;
+  }
+
+  .text-wrap {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
+  .text-nowrap {
+    white-space: nowrap;
+  }
+
+  .text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /*** 其它设置 ***/
+  .outline-none {
+    outline: none;
+  }
+
+  .user-select-none {
+    user-select: none;
+  }
+
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  /**  size  **/
+  .height-full {
+    height: 100%;
+  }
+
+  .padding-10 {
+    padding: 10px;
+  }
+
+  .padding-right-20 {
+    padding-right: 20px;
+  }
+
+  .margin-right--20 {
+    margin-right: -20px;
+  }
+
+  /**  边框  **/
+  .border-none {
+    border: none;
+  }
+
+  /** 定位 **/
+  .relative {
+    position: relative;
+  }
+
+  .fixed {
+    position: fixed;
+  }
+
+  .absolute {
+    position: absolute;
+  }
+
+  /** color  **/
+  .color-f {
+    color: #ffffff;
+  }
+
+  /** background  **/
+  .bg-f {
+    background-color: #ffffff;
+  }
+
+  /** other  **/
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  .overflow-auto {
+    overflow: auto;
+  }
+
+  /** size  **/
+  .width-full {
+    width: 100%;
+  }
+
+  .height-full {
+    height: 100%;
+  }
+
+  /** clear style **/
+  .no-ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

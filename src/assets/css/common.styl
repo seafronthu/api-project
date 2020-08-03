@@ -1,0 +1,22 @@
+justify-contents = {
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around
+}
+align-itemss = {
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  stretch: stretch
+}
+body
+  for direction in row column
+    for justifyKey, justifyValue in justify-contents
+      for alignKey, alignValue in align-itemss
+        {".flex-" + row + "-" + justifyKey + "-" + alignKey}
+          display flex
+          flex-direction direction
+          justify-content justifyValue
+          align-items alignValue

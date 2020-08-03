@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+config/
+scripts/
+dist/
+psd/
+documentation/
+npm-debug.log

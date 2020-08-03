@@ -1,0 +1,12 @@
+@import "../styles/mixins";
+@container-prefix-cls: ~'@{front-prefix}-container';
+
+.@{container-prefix-cls} {
+  display: inline-block;
+  border-radius: @border-radius-base;
+  box-shadow: @box-shadow-outset;
+
+  &&-inset {
+    box-shadow: @box-shadow-inset;
+  }
+}

@@ -1,0 +1,62 @@
+@import "../styles/mixins";
+@btn-prefix-cls: ~'@{front-prefix}-btn';
+
+.@{btn-prefix-cls} {
+  display: inline-block;
+  box-shadow: @box-shadow-outset;
+  line-height: @line-height-base;
+  font-weight: @btn-font-weight;
+  border-radius: @btn-border-radius-base;
+  // touch-action: manipulation;
+  user-select: none;
+  background: rgb(243, 243, 247);
+  outline: none;
+  border: none;
+  color: @primary-color;
+  transition: all .3s cubic-bezier(.645, .045, .355, 1);
+  .button-size(@btn-height-base; @btn-padding-horizontal-base; @font-size-base; @btn-border-radius-base );
+  cursor: pointer;
+
+
+
+  &:hover {
+    box-shadow: @box-shadow-hover;
+
+    &:active {
+      box-shadow: @box-shadow-active;
+    }
+  }
+
+  &&-lg {
+    .button-size(@btn-height-lg; @btn-padding-horizontal-lg; @btn-font-size-lg; @btn-border-radius-base );
+  }
+
+  &&-sm {
+    .button-size(@btn-height-sm; @btn-padding-horizontal-sm; @btn-font-size-sm; @btn-border-radius-sm );
+  }
+
+  &&-circle {
+    padding: 0;
+    width: @btn-height-base;
+    height: @btn-height-base;
+    border-radius: 50%;
+
+    &.@{btn-prefix-cls}-lg {
+      width: @btn-height-lg;
+      height: @btn-height-lg;
+    }
+  }
+
+  &&-round {
+    border-radius: @btn-height-base;
+
+    &.@{btn-prefix-cls}-lg {
+      border-radius: @btn-height-lg;
+      height: @btn-height-lg;
+    }
+  }
+
+  &&-block {
+    width: 100%;
+  }
+}
