@@ -1,20 +1,20 @@
 import React from "react";
-import { Chart as AntvChart } from "@antv/g2";
+import { Chart as AntvChart, View as AntvView } from "@antv/g2";
 import { ViewCfg } from "@antv/g2/lib/interface";
-interface PropTyps {
-  children: React.ReactNode;
-  options: ViewCfg;
-}
-function useView(props: PropTyps) {
-  const [newChart, setNewChart] = React.useState<AntvChart | null>();
-  const { options, children } = props;
+function useView(chart: AntvChart, options: ViewCfg) {
+  const [newView, setNewView] = React.useState<AntvView | null>();
   React.useEffect(() => {
+    if (chart) {
+      const view = chart.createView(options);
+      setNewView(view);
+    }
     return () => {
-      if (newChart) {
-        newChart.destroy();
+      if (chart) {
+        chart.destroy();
       }
-      setNewChart(null);
+      setNewView(null);
     };
-  }, [options, newChart]);
+  }, [options, chart]);
+  return [newView];
 }
 export default useView;

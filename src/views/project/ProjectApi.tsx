@@ -1,5 +1,26 @@
 import React from "react";
+import { useScroll } from "react-use";
 function ProjectApi() {
-  return <div>接口</div>;
+  const scrollRef = React.useRef(null);
+
+  const { x, y } = useScroll(scrollRef);
+
+  return (
+    <>
+      <div>x: {x}</div>
+      <div>y: {y}</div>
+      <div
+        ref={scrollRef}
+        style={{
+          width: "400px",
+          height: "400px",
+          backgroundColor: "whitesmoke",
+          overflow: "scroll"
+        }}
+      >
+        <div style={{ width: "2000px", height: "2000px" }}>Scroll me</div>
+      </div>
+    </>
+  );
 }
 export default ProjectApi;

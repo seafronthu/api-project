@@ -1,24 +1,21 @@
-import React from "react";
-import { Chart as AntvChart } from "@antv/g2";
+import React, { RefObject } from "react";
+import { Chart } from "@antv/g2";
 import { ChartCfg } from "@antv/g2/lib/interface";
-interface PropTyps {
-  children: React.ReactNode;
-  options: ChartCfg;
-}
-function useChart(props: PropTyps) {
-  const [newChart, setNewChart] = React.useState<AntvChart | null>();
-  const { options } = props;
+export type NewChartCfg = Omit<ChartCfg, "container">;
+function useChart(ref: RefObject<HTMLElement>, options: NewChartCfg) {
+  const newChart = React.useRef<Chart | null>();
   React.useEffect(() => {
-    setNewChart(new AntvChart(options));
-    if (newChart) {
-      newChart.area();
+    if (ref.current) {
+      console.log(ref.current);
+      newChart.current = new Chart({ container: ref.current, ...options });
     }
+    // return () => {};
     return () => {
-      if (newChart) {
-        newChart.destroy();
+      if (newChart.current) {
+        newChart.current.destroy();
       }
-      setNewChart(null);
     };
-  }, [options, newChart]);
+  }, [options, ref]);
+  return [newChart.current];
 }
 export default useChart;
