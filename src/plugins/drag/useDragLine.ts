@@ -8,6 +8,7 @@ interface PositionClient {
   downClientY: number;
   upClientX: number;
   upClientY: number;
+  isDrag: boolean;
 }
 function useDragLine(
   ref: RefObject<HTMLElement>,
@@ -17,46 +18,54 @@ function useDragLine(
     downClientX: 0,
     downClientY: 0,
     upClientX: 0,
-    upClientY: 0
+    upClientY: 0,
+    isDrag: false
   }
 ): PositionClient {
+  const frame = React.useRef(0);
+  const isDrag = React.useRef(false);
   const [state, setState] = useRafState<PositionClient>(position);
   React.useEffect(() => {
     console.log("isMove", "isMove", "---------------");
-    let isMove = false;
     const move = (e: MouseEvent) => {
-      if (isMove) {
-        const { clientX, clientY } = e;
-        setState(({ downClientX, downClientY, upClientX, upClientY }) => ({
-          clientX,
-          clientY,
-          downClientX,
-          downClientY,
-          upClientX,
-          upClientY
-        }));
-      }
+      cancelAnimationFrame(frame.current);
+      frame.current = requestAnimationFrame(() => {
+        if (isDrag.current && ref.current) {
+          const { clientX, clientY } = e;
+          setState(({ downClientX, downClientY, upClientX, upClientY }) => ({
+            clientX,
+            clientY,
+            downClientX,
+            downClientY,
+            upClientX,
+            upClientY,
+            isDrag: isDrag.current
+          }));
+        }
+      });
     };
     const down = (e: MouseEvent) => {
-      isMove = true;
-      setState(({ clientX, clientY, upClientX, upClientY }) => ({
-        clientX,
-        clientY,
+      isDrag.current = true;
+      setState(({ upClientX, upClientY }) => ({
+        clientX: e.clientX,
+        clientY: e.clientY,
         downClientX: e.clientX,
         downClientY: e.clientY,
         upClientX,
-        upClientY
+        upClientY,
+        isDrag: isDrag.current
       }));
     };
     const up = (e: MouseEvent) => {
-      isMove = false;
-      setState(({ clientX, clientY, downClientX, downClientY }) => ({
-        clientX,
-        clientY,
+      isDrag.current = false;
+      setState(({ downClientX, downClientY }) => ({
+        clientX: e.clientX,
+        clientY: e.clientY,
         downClientX,
         downClientY,
         upClientX: e.clientX,
-        upClientY: e.clientY
+        upClientY: e.clientY,
+        isDrag: isDrag.current
       }));
     };
     if (ref.current) {
@@ -65,7 +74,7 @@ function useDragLine(
         passive: true
       });
 
-      ref.current.addEventListener("mousemove", move, {
+      document.body.addEventListener("mousemove", move, {
         capture: false,
         passive: true
       });
@@ -80,7 +89,7 @@ function useDragLine(
       const { current } = ref;
       if (current) {
         current.removeEventListener("mousedown", down);
-        current.removeEventListener("mousemove", move);
+        document.body.removeEventListener("mousemove", move);
         document.body.removeEventListener("mouseup", up);
       }
     };

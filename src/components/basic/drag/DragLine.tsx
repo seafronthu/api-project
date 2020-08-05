@@ -5,27 +5,49 @@ import { ClassValue } from "classnames/types";
 export interface DeviateDistance {
   deviateX: number;
   deviateY: number;
+  isDrag: boolean;
 }
 
 interface PropTypes {
-  deviateFn: ({ deviateX, deviateY }: DeviateDistance) => void;
+  deviateFn: ({ deviateX, deviateY, isDrag }: DeviateDistance) => void;
   className?: ClassValue;
   children?: React.ReactNode;
+}
+function changeStyle(status: boolean) {
+  const id = "drag_style";
+  const dom = document.getElementById(id);
+  if ((dom && status) || (!dom && !status)) {
+    return;
+  }
+  if (dom && !status) {
+    document.head.removeChild(dom);
+    return;
+  }
+  if (!dom && status) {
+    const styleDom = document.createElement("style");
+    styleDom.id = id;
+    const textNode = document.createTextNode("*{cursor: col-resize!important;user-select:none;}");
+    styleDom.appendChild(textNode);
+    document.head.appendChild(styleDom);
+  }
 }
 function DragLine(props: PropTypes) {
   const { deviateFn, className, children } = props;
   const dragRef = React.useRef(null);
-  const { clientX, clientY, downClientX, downClientY } = useDragLine(dragRef);
+  const { clientX, clientY, downClientX, downClientY, isDrag } = useDragLine(dragRef);
   const classes = React.useMemo(() => {
-    return classNames([className, "width-full height-full"]);
+    return classNames([className, "width-full height-full user-select-none col-resize"]);
   }, [className]);
   const deviateCallback = React.useCallback(deviateFn, [deviateFn]);
   React.useEffect(() => {
     function deviate() {
-      return { deviateX: clientX - downClientX, deviateY: clientY - downClientY };
+      changeStyle(isDrag);
+      // console.log(clientX, downClientX, clientX - downClientX);
+      return { deviateX: clientX - downClientX, deviateY: clientY - downClientY, isDrag };
     }
     deviateCallback(deviate());
-  }, [clientX, clientY, deviateCallback, downClientX, downClientY]);
+    return () => changeStyle(false);
+  }, [clientX, clientY, deviateCallback, downClientX, downClientY, isDrag]);
   return (
     <div ref={dragRef} className={classes}>
       {children}
