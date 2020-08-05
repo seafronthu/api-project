@@ -11,7 +11,6 @@ interface PropTypes {
 }
 function MainLayout(props: PropTypes) {
   const { children } = props;
-  console.log(children);
   return (
     <Layout className="main-layout flex flex-column-start-stretch">
       <Header></Header>

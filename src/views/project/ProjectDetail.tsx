@@ -7,12 +7,9 @@ import ContainerFluid from "src/components/business/container/ContainerFluid";
 function ProjectDetail() {
   const ref = React.useRef<HTMLDivElement>(null);
   const [refChart] = useChart(ref, { autoFit: true, height: 500 });
-  // console.log(chart, "chart");
-
   React.useEffect(() => {
     function renderChart() {
       const chart = refChart.current;
-      console.log(chart);
       if (chart) {
         const data = [
           { year: "已发布", value: 3 },

@@ -6,7 +6,6 @@ function useChart(ref: RefObject<HTMLElement>, options: NewChartCfg) {
   const newChart = React.useRef<Chart | null>();
   React.useEffect(() => {
     if (ref.current) {
-      console.log(ref.current);
       newChart.current = new Chart({ container: ref.current, ...options });
     }
     // return () => {};

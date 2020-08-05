@@ -13,6 +13,7 @@ function MenuGeneral() {
         <Menu.Item key="5">分析报表</Menu.Item>
       </SubMenu>
       <SubMenu key="sub3" icon={<NotificationOutlined />} title="公共资源">
+        <Menu.Item key="15">项目环境</Menu.Item>
         <Menu.Item key="9">数据结构</Menu.Item>
         <Menu.Item key="10">通用函数</Menu.Item>
       </SubMenu>

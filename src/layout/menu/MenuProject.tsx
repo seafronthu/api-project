@@ -12,9 +12,15 @@ function MenuProject() {
       </Button>
       <Menu mode="inline" defaultSelectedKeys={["1"]} defaultOpenKeys={["sub1"]} style={{ height: "100%", borderRight: 0 }}>
         <SubMenu key="sub1" icon={<UserOutlined />} title="项目">
-          <Menu.Item key="1">项目概况</Menu.Item>
-          <Menu.Item key="2">项目版本</Menu.Item>
-          <Menu.Item key="3">API</Menu.Item>
+          <Menu.Item key="1" onClick={() => history.push("/project-list/project-detail")}>
+            项目概况
+          </Menu.Item>
+          <Menu.Item key="2" onClick={() => history.push("/project-list/project-version")}>
+            项目版本
+          </Menu.Item>
+          <Menu.Item key="3" onClick={() => history.push("/project-list/project-api")}>
+            API
+          </Menu.Item>
           <Menu.Item key="4">状态码</Menu.Item>
           <Menu.Item key="5">项目动态</Menu.Item>
         </SubMenu>

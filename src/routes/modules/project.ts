@@ -24,4 +24,10 @@ const ProjectTestApi = {
   exact: true,
   component: () => import(/* webpackChunkName: "ProjectTestApi" */ "src/views/project/ProjectTestApi")
 };
-export default [ProjectList, ProjectDetail, ProjectApi, ProjectTestApi];
+const ProjectVersion = {
+  name: "ProjectVersion",
+  path: "/project-list/project-version",
+  exact: true,
+  component: () => import(/* webpackChunkName: "ProjectVersion" */ "src/views/project/ProjectVersion")
+};
+export default [ProjectList, ProjectDetail, ProjectApi, ProjectTestApi, ProjectVersion];
