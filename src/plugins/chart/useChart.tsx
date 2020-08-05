@@ -16,6 +16,7 @@ function useChart(ref: RefObject<HTMLElement>, options: NewChartCfg) {
       }
     };
   }, [options, ref]);
-  return [newChart.current];
+  // console.log(newChart.current);
+  return [newChart];
 }
 export default useChart;

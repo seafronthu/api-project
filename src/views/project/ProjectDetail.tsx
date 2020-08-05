@@ -6,47 +6,47 @@ import ContainerFluid from "src/components/business/container/ContainerFluid";
 // import { Chart } from "@antv/g2";
 function ProjectDetail() {
   const ref = React.useRef<HTMLDivElement>(null);
-  useChart(ref, { width: 200, height: 500 });
+  const [refChart] = useChart(ref, { autoFit: true, height: 500 });
   // console.log(chart, "chart");
-  // function renderChart(chart: Chart | null | undefined) {
-  //   if (chart) {
-  //     const data = [
-  //       { year: "1991", value: 3 },
-  //       { year: "1992", value: 4 },
-  //       { year: "1993", value: 3.5 },
-  //       { year: "1994", value: 5 },
-  //       { year: "1995", value: 4.9 },
-  //       { year: "1996", value: 6 },
-  //       { year: "1997", value: 7 },
-  //       { year: "1998", value: 9 },
-  //       { year: "1999", value: 13 }
-  //     ];
-  //     chart.data(data);
-  //     chart.scale({
-  //       year: {
-  //         range: [0, 1]
-  //       },
-  //       value: {
-  //         min: 0,
-  //         nice: true
-  //       }
-  //     });
 
-  //     chart.tooltip({
-  //       showCrosshairs: true, // 展示 Tooltip 辅助线
-  //       shared: true
-  //     });
+  React.useEffect(() => {
+    function renderChart() {
+      const chart = refChart.current;
+      console.log(chart);
+      if (chart) {
+        const data = [
+          { year: "已发布", value: 3 },
+          { year: "设计", value: 4 },
+          { year: "待定", value: 1 },
+          { year: "开发", value: 5 },
+          { year: "对接", value: 5 },
+          { year: "测试", value: 6 },
+          { year: "已完成", value: 9 },
+          { year: "异常", value: 1 },
+          { year: "维护", value: 2 },
+          { year: "废弃", value: 10 }
+        ];
+        chart.data(data);
+        chart.tooltip({
+          showMarkers: false
+        });
 
-  //     chart.line().position("year*value").label("value");
-  //     chart.point().position("year*value");
+        chart
+          .interval()
+          .position("year*value")
+          .color("year", ["#00d29f", "#9c27b0", "#fc0", "#07a1ea", "#07a1ea", "#07a1ea", "#8bc34a", "#ea0707", "#f18f00", "#999"]);
 
-  //     chart.render();
-  //   }
-  // }
-  // React.useEffect(() => {
-  //   console.log(ref.current, "nb");
-  //   return () => {};
-  // });
+        chart.interaction("element-highlight");
+        chart.interaction("element-list-highlight");
+        chart.interaction("legend-highlight");
+        chart.interaction("axis-label-highlight");
+
+        chart.render();
+      }
+    }
+    renderChart();
+    return () => {};
+  });
   function renderTitle() {
     return (
       <Button className="text-bold heading-color font-size-lg" type="text">
@@ -57,7 +57,6 @@ function ProjectDetail() {
   }
   return (
     <ContainerFluid theme="white" padding>
-      <div ref={ref}></div>
       <Descriptions title={renderTitle()}>
         <Descriptions.Item label="API总数">5</Descriptions.Item>
         <Descriptions.Item label="协作人员数量">1人</Descriptions.Item>
@@ -66,6 +65,7 @@ function ProjectDetail() {
         <Descriptions.Item label="更新时间">2020-08-03 14:28:05</Descriptions.Item>
         <Descriptions.Item label="项目文档总数">1</Descriptions.Item>
       </Descriptions>
+      <div ref={ref}></div>
     </ContainerFluid>
   );
 }
