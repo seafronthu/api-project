@@ -2,15 +2,16 @@ import React, { useMemo } from "react";
 import classnames from "classnames";
 import { Spin } from "antd";
 import { mergePrefixCls } from "src/libs/utils";
+import { ClassValue } from "classnames/types";
 import "./ContainerFluid.less";
-interface PropTypes {
+export interface PropTypes {
   header?: React.ReactNode;
   children: React.ReactNode;
   spinning?: boolean;
   theme?: "black" | "white";
   tip?: string;
   padding?: boolean;
-  className?: string;
+  className?: ClassValue;
   scrollClassName?: string | string[];
 }
 function ContainerFluid(props: PropTypes) {
@@ -21,7 +22,7 @@ function ContainerFluid(props: PropTypes) {
       "container-fluid-",
       [theme, typeof padding === "boolean" ? "padding" : null],
       "container-fluid width-full height-full",
-      className
+      classnames(className)
     );
   }, [className, theme, padding]);
   const scrollCls = useMemo(() => {

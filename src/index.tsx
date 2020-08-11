@@ -10,7 +10,6 @@ import "src/assets/css/common.less";
 // import App from "./App";
 import App from "src/routes";
 // import * as serviceWorker from "./serviceWorker";
-
 ReactDOM.render(
   // <React.StrictMode>
   <Provider store={store}>

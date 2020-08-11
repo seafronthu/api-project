@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import useDragLine from "src/plugins/drag/useDragLine";
 import { ClassValue } from "classnames/types";
+import { getPrefixCls } from "../libs/utils";
 export interface DeviateDistance {
   deviateX: number;
   deviateY: number;
@@ -11,6 +12,7 @@ export interface DeviateDistance {
 interface PropTypes {
   deviateFn: ({ deviateX, deviateY, isDrag }: DeviateDistance) => void;
   className?: ClassValue;
+  style?: React.CSSProperties;
   children?: React.ReactNode;
 }
 function changeStyle(status: boolean) {
@@ -36,7 +38,7 @@ function DragLine(props: PropTypes) {
   const dragRef = React.useRef(null);
   const { clientX, clientY, downClientX, downClientY, isDrag } = useDragLine(dragRef);
   const classes = React.useMemo(() => {
-    return classNames([className, "width-full height-full user-select-none col-resize"]);
+    return classNames([className, getPrefixCls("drag-line")]);
   }, [className]);
   const deviateCallback = React.useCallback(deviateFn, [deviateFn]);
   React.useEffect(() => {
@@ -46,12 +48,13 @@ function DragLine(props: PropTypes) {
       return { deviateX: clientX - downClientX, deviateY: clientY - downClientY, isDrag };
     }
     deviateCallback(deviate());
-    return () => changeStyle(false);
-  }, [clientX, clientY, deviateCallback, downClientX, downClientY, isDrag]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clientX, clientY, downClientX, downClientY, isDrag]);
+  React.useEffect(() => () => changeStyle(false), []);
   return (
     <div ref={dragRef} className={classes}>
       {children}
     </div>
   );
 }
-export default DragLine;
+export default React.memo(DragLine);
