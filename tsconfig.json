@@ -26,6 +26,8 @@
     }
   },
   "include": [
-    "src"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "renderer/**/*.ts"
   ]
 }

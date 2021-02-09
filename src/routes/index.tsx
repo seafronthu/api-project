@@ -86,6 +86,13 @@ function App(props: PropTypes) {
   // useEffect(() => {
   //   console.log(props);
   // });
+  // console.log(props);
+  // const history = useHistory();
+  // const loca = useLocation();
+  // if (status === "offline") {
+  //   // history.push("/login");
+  //   console.log(history, location);
+  // }
   if (type === "hash") {
     return <HashRouter>{renderRoute(status)}</HashRouter>;
   }

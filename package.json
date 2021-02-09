@@ -2,6 +2,7 @@
   "name": "api-project",
   "version": "0.1.0",
   "private": true,
+  "main": "./public/main.js",
   "dependencies": {
     "@antv/g2": "^4.0.14",
     "@babel/core": "7.9.0",
@@ -30,11 +31,13 @@
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "classnames": "^2.2.6",
+    "cross-env": "^7.0.3",
     "css-loader": "3.4.2",
     "dayjs": "^1.8.30",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "electron": "^9.1.1",
+    "electron-builder": "^22.9.1",
     "electron-is-dev": "^1.2.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.11.0",
@@ -92,8 +95,43 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "start-electron": "yarn build-electron && electron .",
+    "build-electron": "cross-env NODE_ENV=production webpack --config ./webpack.config.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
+  },
+  "build": {
+    "appId": "com.example.app",
+    "files": [
+      "build/**/*",
+      "public/main.js",
+      "public/preload.js"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "dmg": {
+      "background": "public/appdmg.png",
+      "icon": "public/icon.icns",
+      "iconSize": 100,
+      "contents": [
+        {
+          "x": 380,
+          "y": 280,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 110,
+          "y": 280,
+          "type": "file"
+        }
+      ],
+      "window": {
+        "width": 500,
+        "height": 500
+      }
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -164,5 +202,9 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "webpack-cli": "^4.2.0"
   }
 }
